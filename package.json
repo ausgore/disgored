@@ -1,0 +1,28 @@
+{
+	"name": "disgored",
+	"version": "1.0.0",
+	"description": "A framework extension for discord.js",
+	"main": "lib/index.js",
+	"keywords": [
+		"discordjs",
+		"discord",
+		"framework",
+		"chatbot",
+		"discord bot"
+	],
+	"author": "ausgore",
+	"license": "Apache-2.0",
+	"devDependencies": {
+		"ts-node": "^10.9.2",
+		"typescript": "^5.4.4"
+	},
+	"scripts": {
+		"test": "node test/index.js"
+	},
+	"engines": {
+		"node": ">=16.11.0"
+	},
+	"dependencies": {
+		"discord.js": "^14.14.1"
+	}
+}
