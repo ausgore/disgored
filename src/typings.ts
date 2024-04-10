@@ -1,4 +1,4 @@
-import { AutocompleteInteraction, Client, ClientEvents, ClientOptions as DiscordClientOptions, CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { AutocompleteInteraction, Client, ClientEvents, CommandInteraction, SlashCommandBuilder } from "discord.js";
 import Command from "./classes/command";
 
 export interface ClientProps {
