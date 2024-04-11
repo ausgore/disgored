@@ -2,6 +2,7 @@
 	"name": "disgored",
 	"version": "1.0.0",
 	"description": "A framework extension for discord.js",
+	"type": "module",
 	"main": "lib/index.js",
 	"keywords": [
 		"discordjs",
