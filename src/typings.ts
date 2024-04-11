@@ -1,4 +1,4 @@
-import { AutocompleteInteraction, Client, ClientEvents, CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, Client, ClientEvents, SlashCommandBuilder } from "discord.js";
 import Command from "./classes/command";
 
 export interface ClientProps {
@@ -7,7 +7,7 @@ export interface ClientProps {
 
 export interface CommandProps {
 	data: SlashCommandBuilder,
-	run: (interaction: CommandInteraction) => void;
+	run: (interaction: ChatInputCommandInteraction) => void;
 	autocomplete?: (interaction: AutocompleteInteraction) => void;
 }
 
