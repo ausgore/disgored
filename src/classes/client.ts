@@ -12,8 +12,8 @@ export default class Client extends DiscordClient implements ClientProps {
 	}
 
 	public async init(token: string) {
-		await this.register(path.join(__dirname, "commands"));
-		await this.register(path.join(__dirname, "events"));
+		await this.register(`${path.dirname(require.main.filename)}/commands`);
+		await this.register(`${path.dirname(require.main.filename)}/events`);
 		this.once("ready", async (client) => {
 			if (this.commands.size) await this.loadSlashCommands();
 			console.log(`Successfully logged in as \u001b[32m${client.user.tag}\u001b[0m!`);
