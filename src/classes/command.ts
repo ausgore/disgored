@@ -1,8 +1,8 @@
-import { AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 import { CommandProps } from "../typings";
 
 export default class Command implements CommandProps {
-	public data: SlashCommandBuilder;
+	public data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> | SlashCommandSubcommandsOnlyBuilder;
 	public run: (interaction: ChatInputCommandInteraction) => void;
 	public autocomplete?: (interaction: AutocompleteInteraction) => void;
 	constructor(props: CommandProps) {
