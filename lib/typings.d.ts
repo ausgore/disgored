@@ -9,6 +9,11 @@ export interface CommandProps {
     run: (interaction: ChatInputCommandInteraction) => void;
     autocomplete?: (interaction: AutocompleteInteraction) => void;
 }
+export interface SubcommandProps {
+    name: string;
+    group?: string;
+    run: (interaction: ChatInputCommandInteraction) => void;
+}
 export interface EventProps<T extends keyof ClientEvents> {
     event: T;
     on: (client: Client, ...args: (ClientEvents)[T]) => void;
