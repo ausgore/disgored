@@ -23,11 +23,16 @@ const loadSubcommands = async function(dir: string, collection: Collection<strin
 		else {
 			const module = await import(filePath);
 			if (module.default) collection.set(module.default.name, module.default);
-			else for (const name in module) collection.set(`${name}-${module[name].group}`, module[name]);
+			else for (const name in module) collection.set(`${module[name].name}-${module[name].group}`, module[name]);
 		}
 	}
 }
 
+const getSubcommand = async function(subcommands: Collection<string, Subcommand>, subcommand: string, subcommandGroup?: string) {
+	return subcommands.get(subcommandGroup ? `${subcommand}-${subcommandGroup}` : subcommand);
+}
+
 export {
-	loadSubcommands
+	loadSubcommands,
+	getSubcommand
 }
