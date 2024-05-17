@@ -7,4 +7,5 @@ export default class Subcommand implements SubcommandProps {
     constructor(props: SubcommandProps);
 }
 declare const loadSubcommands: (dir: string, collection: Collection<string, Subcommand>) => Promise<void>;
-export { loadSubcommands };
+declare const getSubcommand: (subcommands: Collection<string, Subcommand>, subcommand: string, subcommandGroup?: string) => Promise<Subcommand>;
+export { loadSubcommands, getSubcommand };
