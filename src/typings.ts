@@ -7,7 +7,7 @@ export interface ClientProps {
 }
 
 export interface CommandProps {
-	data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> | SlashCommandSubcommandsOnlyBuilder,
+	data: any,
 	run: (interaction: ChatInputCommandInteraction) => void;
 	autocomplete?: (interaction: AutocompleteInteraction) => void;
 }

@@ -1,11 +1,11 @@
-import { AutocompleteInteraction, ChatInputCommandInteraction, ClientEvents, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, ClientEvents } from "discord.js";
 import Client from "./classes/client";
 import Command from "./classes/command";
 export interface ClientProps {
     commands: Map<string, Command>;
 }
 export interface CommandProps {
-    data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> | SlashCommandSubcommandsOnlyBuilder;
+    data: any;
     run: (interaction: ChatInputCommandInteraction) => void;
     autocomplete?: (interaction: AutocompleteInteraction) => void;
 }
