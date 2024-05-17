@@ -2,7 +2,7 @@ import { AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuild
 import { CommandProps } from "../typings";
 
 export default class Command implements CommandProps {
-	public data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> | SlashCommandSubcommandsOnlyBuilder;
+	public data: SlashCommandBuilder | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> | SlashCommandSubcommandsOnlyBuilder;
 	public run: (interaction: ChatInputCommandInteraction) => void;
 	public autocomplete?: (interaction: AutocompleteInteraction) => void;
 	constructor(props: CommandProps) {
