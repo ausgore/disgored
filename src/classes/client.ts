@@ -25,17 +25,19 @@ export default class Client extends DiscordClient implements ClientProps {
 		const files = await fs.readdir(dir).catch(() => null);
 		if (!files?.length) return console.log(`\x1b[31m - ${dir.split("/")[1].slice(0, 1).toUpperCase() + dir.split("/")[1].slice(1, -1)} folder cannot be found\x1b[37m`);
 
-		await Promise.all(files.map(async (file) => {
-			const filePath = path.join(dir, file);
-			const stats = await fs.lstat(filePath);
-			if (stats.isDirectory()) this.register(filePath);
-			else if ([".ts", ".js"].includes(file.slice(-3))) {
-				const module = await import(`${filePath}`);
-				const data = module.default ?? module;
-				if (data instanceof Command) this.commands.set(data.data.name, data);
+        const processFile = async (file) => {
+            const filePath = path.join(dir, file);
+            const stats = await fs.lstat(filePath);
+            if (stats.isDirectory()) await this.register(filePath);
+            else if ([".ts", ".js"].includes(file.slice(-3))) {
+                const module = await import(filePath);
+                const data = module.default ?? module;
+                if (data instanceof Command) this.commands.set(data.data.name, data); 
 				else if (data instanceof Event) this.on(data.event, data.on.bind(null, this));
-			}
-		}));
+            }
+        };
+
+        await Promise.all(files.map(file => processFile(file)));
 	}
 
 	public async loadSlashCommands() {
