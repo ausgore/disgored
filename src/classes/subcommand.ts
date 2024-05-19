@@ -28,7 +28,7 @@ const loadSubcommands = async function(dir: string, collection: Collection<strin
 	}
 }
 
-const getSubcommand = function(subcommands: Collection<string, Subcommand>, subcommand: string, subcommandGroup?: string) {
+const getSubcommand = function(subcommands: Collection<string, Subcommand>, subcommand: string, subcommandGroup?: string | undefined) {
 	return subcommands.get(subcommandGroup ? `${subcommand}-${subcommandGroup}` : subcommand);
 }
 
