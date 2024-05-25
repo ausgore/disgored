@@ -1,17 +1,21 @@
-import { AutocompleteInteraction, ChatInputCommandInteraction, ClientEvents } from "discord.js";
+import { AutocompleteInteraction, ButtonInteraction, ChatInputCommandInteraction, ClientEvents, Collection } from "discord.js";
 import Client from "./classes/client";
 import Command from "./classes/command";
+import Subcommand from "./classes/subcommand";
 export interface ClientProps {
-    commands: Map<string, Command>;
+    commands: Collection<string, Command>;
+    subcommands: Collection<string, Subcommand>;
 }
 export interface CommandProps {
     data: any;
     run: (interaction: ChatInputCommandInteraction) => void;
     autocomplete?: (interaction: AutocompleteInteraction) => void;
+    button?: (interaction: ButtonInteraction) => void;
 }
 export interface SubcommandProps {
-    name: string;
-    group?: string;
+    command: string;
+    subcommand: string;
+    subcommandGroup?: string;
     run: (interaction: ChatInputCommandInteraction) => void;
 }
 export interface EventProps<T extends keyof ClientEvents> {

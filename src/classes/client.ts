@@ -4,9 +4,11 @@ import Command from "./command";
 import { promises as fs } from "fs";
 import path from "path";
 import Event from "./event";
+import Subcommand from "./subcommand";
 
 export default class Client extends DiscordClient implements ClientProps {
 	public commands: Collection<string, Command> = new Collection();
+	public subcommands: Collection<string, Subcommand> = new Collection();
 	constructor(options: ClientOptions) {
 		super(options);
 	}
@@ -25,19 +27,34 @@ export default class Client extends DiscordClient implements ClientProps {
 		const files = await fs.readdir(dir).catch(() => null);
 		if (!files?.length) return console.log(`\x1b[31m - ${dir.split("/")[1].slice(0, 1).toUpperCase() + dir.split("/")[1].slice(1, -1)} folder cannot be found\x1b[37m`);
 
-        const processFile = async (file) => {
-            const filePath = path.join(dir, file);
-            const stats = await fs.lstat(filePath);
-            if (stats.isDirectory()) await this.register(filePath);
-            else if ([".ts", ".js"].includes(file.slice(-3))) {
-                const module = await import(filePath);
-                const data = module.default ?? module;
-                if (data instanceof Command) this.commands.set(data.data.name, data); 
+		const processFile = async (file) => {
+			const filePath = path.join(dir, file);
+			const stats = await fs.lstat(filePath);
+			if (stats.isDirectory()) await this.register(filePath);
+			else if ([".ts", ".js"].includes(file.slice(-3))) {
+				const module = await import(filePath);
+				const data = module.default ?? module;
+				if (data instanceof Command) this.commands.set(data.data.name, data);
 				else if (data instanceof Event) this.on(data.event, data.on.bind(null, this));
-            }
-        };
+				else if (data instanceof Subcommand) this.subcommands.set(`${data.command}${data.subcommandGroup ? `-${data.subcommandGroup}` : ""}-${data.subcommand}`, data);
+				else if (typeof data == "object") {
+					for (const key in data) {
+						if (data.hasOwnProperty(key)) {
+							if (data[key] instanceof Subcommand) {
+								const minidata = data[key] as Subcommand;
+								this.subcommands.set(`${minidata.command}${minidata.subcommandGroup ? `-${minidata.subcommandGroup}` : ""}-${minidata.subcommand}`, minidata);
+							}
+						}
+					}
+				}
+			}
+		};
 
-        await Promise.all(files.map(file => processFile(file)));
+		await Promise.all(files.map(file => processFile(file)));
+	}
+
+	public getSubcommand(command: string, subcommand: string, subcommandGroup?: string | null) {
+		return this.subcommands.get(`${command}${subcommandGroup ? `-${subcommandGroup}` : ""}-${subcommand}`);
 	}
 
 	public async loadSlashCommands() {
