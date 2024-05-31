@@ -32,7 +32,8 @@ export default class Client extends DiscordClient implements ClientProps {
 			const stats = await fs.lstat(filePath);
 			if (stats.isDirectory()) await this.register(filePath);
 			else if ([".ts", ".js"].includes(file.slice(-3))) {
-				const module = await import(filePath);
+				const absolute = path.resolve(process.cwd(), filePath);
+				const module = await import(absolute);
 				const data = module.default ?? module;
 				if (data instanceof Command) this.commands.set(data.data.name, data);
 				else if (data instanceof Event) this.on(data.event, data.on.bind(null, this));
