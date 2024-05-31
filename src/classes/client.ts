@@ -24,6 +24,7 @@ export default class Client extends DiscordClient implements ClientProps {
 	}
 
 	private async register(dir: string) {
+		dir = path.resolve(process.cwd(), dir);
 		const files = await fs.readdir(dir).catch(() => null);
 		if (!files?.length) return console.log(`\x1b[31m - ${dir.split("/")[1].slice(0, 1).toUpperCase() + dir.split("/")[1].slice(1, -1)} folder cannot be found\x1b[37m`);
 
