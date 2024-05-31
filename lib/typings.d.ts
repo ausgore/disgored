@@ -6,6 +6,12 @@ export interface ClientProps {
     commands: Collection<string, Command>;
     subcommands: Collection<string, Subcommand>;
 }
+export interface InitOptionsProps {
+    directories?: {
+        commands?: string;
+        events?: string;
+    };
+}
 export interface CommandProps {
     data: any;
     run: (interaction: ChatInputCommandInteraction) => void;

@@ -1,5 +1,5 @@
 import { Client as DiscordClient, ClientOptions, REST, Routes, Collection } from "discord.js";
-import { ClientProps } from "../typings";
+import { ClientProps, InitOptionsProps } from "../typings";
 import Command from "./command";
 import { promises as fs } from "fs";
 import path from "path";
@@ -13,9 +13,9 @@ export default class Client extends DiscordClient implements ClientProps {
 		super(options);
 	}
 
-	public async init(token: string) {
-		await this.register(`./commands`);
-		await this.register(`./events`);
+	public async init(token: string, options: InitOptionsProps) {
+		await this.register(options.directories?.commands ?? "./commands");
+		await this.register(options.directories?.events ?? "./events");
 		this.once("ready", async (client) => {
 			if (this.commands.size) await this.loadSlashCommands();
 			console.log(`Successfully logged in as \u001b[32m${client.user.tag}\u001b[0m!`);
