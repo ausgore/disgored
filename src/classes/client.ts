@@ -13,7 +13,7 @@ export default class Client extends DiscordClient implements ClientProps {
 		super(options);
 	}
 
-	public async init(token: string, options: InitOptionsProps) {
+	public async init(token: string, options?: InitOptionsProps) {
 		await this.register(options.directories?.commands ?? "./commands");
 		await this.register(options.directories?.events ?? "./events");
 		this.once("ready", async (client) => {

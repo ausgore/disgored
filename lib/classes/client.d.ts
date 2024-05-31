@@ -6,7 +6,7 @@ export default class Client extends DiscordClient implements ClientProps {
     commands: Collection<string, Command>;
     subcommands: Collection<string, Subcommand>;
     constructor(options: ClientOptions);
-    init(token: string, options: InitOptionsProps): Promise<void>;
+    init(token: string, options?: InitOptionsProps): Promise<void>;
     private register;
     getSubcommand(command: string, subcommand: string, subcommandGroup?: string | null): Subcommand;
     loadSlashCommands(): Promise<void>;
