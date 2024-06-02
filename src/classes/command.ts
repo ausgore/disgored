@@ -1,4 +1,4 @@
-import { AutocompleteInteraction, ButtonInteraction, ChatInputCommandInteraction, ModalSubmitInteraction } from "discord.js";
+import { AnySelectMenuInteraction, AutocompleteInteraction, ButtonInteraction, ChatInputCommandInteraction, ModalSubmitInteraction } from "discord.js";
 import { CommandProps } from "../typings";
 
 export default class Command implements CommandProps {
@@ -7,6 +7,7 @@ export default class Command implements CommandProps {
 	public autocomplete?: (interaction: AutocompleteInteraction) => void;
 	public button?: (interaction: ButtonInteraction) => void;
 	public modal?: (interaction: ModalSubmitInteraction) => void;
+	public select?: (interaction: AnySelectMenuInteraction) => void;
 	constructor(props: CommandProps) {
 		for (const prop in props) this[prop] = props[prop] ?? null;
 	}
