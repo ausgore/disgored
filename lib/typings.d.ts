@@ -23,7 +23,7 @@ export interface CommandProps {
 export interface SubcommandProps {
     command: string;
     subcommand: string;
-    subcommandGroup?: string;
+    group?: string;
     run: (interaction: ChatInputCommandInteraction) => void;
     autocomplete?: (interaction: AutocompleteInteraction) => void;
     button?: (interaction: ButtonInteraction) => void;
