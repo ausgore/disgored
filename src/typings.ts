@@ -29,6 +29,10 @@ export interface SubcommandProps {
 	subcommand: string;
 	subcommandGroup?: string;
 	run: (interaction: ChatInputCommandInteraction) => void;
+	autocomplete?: (interaction: AutocompleteInteraction) => void;
+	button?: (interaction: ButtonInteraction) => void;
+	modal?: (interaction: ModalSubmitInteraction) => void;
+	select?: (interaction: AnySelectMenuInteraction) => void;
 }
 
 export interface EventProps<T extends keyof ClientEvents> {

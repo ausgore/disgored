@@ -1,17 +1,16 @@
-import { ChatInputCommandInteraction, Collection } from "discord.js";
+import { AnySelectMenuInteraction, AutocompleteInteraction, ButtonInteraction, ChatInputCommandInteraction, ModalSubmitInteraction } from "discord.js";
 import { SubcommandProps } from "../typings";
-import { promises as fs } from "fs";
-import path from "path";
 
 export default class Subcommand implements SubcommandProps {
 	command: string;
 	subcommand: string;
 	subcommandGroup?: string;
 	run: (interaction: ChatInputCommandInteraction) => void;
+	autocomplete?: (interaction: AutocompleteInteraction) => void;
+	button?: (interaction: ButtonInteraction) => void;
+	modal?: (interaction: ModalSubmitInteraction) => void;
+	select?: (interaction: AnySelectMenuInteraction) => void;
 	constructor(props: SubcommandProps) {
-		this.command = props.command;
-		this.subcommand = props.subcommand;
-		this.subcommandGroup = props.subcommandGroup;
-		this.run = props.run;
+		for (const prop in props) this[prop] = props[prop] ?? null;
 	}
 }
