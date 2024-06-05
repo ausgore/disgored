@@ -42,13 +42,13 @@ export default class Client extends DiscordClient implements ClientProps {
 				const data = module.default ?? module;
 				if (data instanceof Command) this.commands.set(data.data.name, data);
 				else if (data instanceof Event) this.on(data.event, data.on.bind(null, this));
-				else if (data instanceof Subcommand) this.subcommands.set(`${data.command}${data.subcommandGroup ? `-${data.subcommandGroup}` : ""}-${data.subcommand}`, data);
+				else if (data instanceof Subcommand) this.subcommands.set(`${data.command}${data.group ? `-${data.group}` : ""}-${data.subcommand}`, data);
 				else if (typeof data == "object") {
 					for (const key in data) {
 						if (data.hasOwnProperty(key)) {
 							if (data[key] instanceof Subcommand) {
 								const minidata = data[key] as Subcommand;
-								this.subcommands.set(`${minidata.command}${minidata.subcommandGroup ? `-${minidata.subcommandGroup}` : ""}-${minidata.subcommand}`, minidata);
+								this.subcommands.set(`${minidata.command}${minidata.group ? `-${minidata.group}` : ""}-${minidata.subcommand}`, minidata);
 							}
 						}
 					}
