@@ -19,6 +19,7 @@ export default class Client extends DiscordClient implements ClientProps {
 		this.once("ready", async (client) => {
 			if (this.commands.size) await this.loadSlashCommands();
 			console.log(`Successfully logged in as \u001b[32m${client.user.tag}\u001b[0m!`);
+			await this.application.commands.fetch();
 		});
 		this.login(token);
 	}
