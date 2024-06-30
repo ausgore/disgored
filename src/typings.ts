@@ -35,7 +35,7 @@ export interface SubcommandProps {
 	select?: (interaction: AnySelectMenuInteraction) => void;
 }
 
-export interface EventProps<T extends keyof ClientEvents> {
+export interface EventProps<T extends string | keyof ClientEvents> {
 	event: T;
-	on: (client: Client, ...args: (ClientEvents)[T]) => void;
+	on: (client: Client, ...args: T extends keyof ClientEvents ? (ClientEvents)[T] : any[]) => void;
 }
