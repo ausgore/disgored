@@ -1,8 +1,7 @@
 import { ClientEvents } from "discord.js";
 import { EventProps } from "../typings";
-import Client from "./client";
-export default class Event<T extends keyof ClientEvents> implements EventProps<T> {
+export default class Event<T extends string | keyof ClientEvents = keyof ClientEvents> implements EventProps<T> {
     event: T;
-    on: (client: Client, ...args: (ClientEvents)[T]) => void;
+    on: (client: any, ...args: any[]) => void;
     constructor(props: EventProps<T>);
 }
