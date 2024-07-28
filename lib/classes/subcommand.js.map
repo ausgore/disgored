@@ -1,1 +1,1 @@
-{"version":3,"file":"subcommand.js","sourceRoot":"","sources":["../../src/classes/subcommand.ts"],"names":[],"mappings":";;AAGA,MAAqB,UAAU;IAS9B,YAAY,KAAsB;;QACjC,KAAK,MAAM,IAAI,IAAI,KAAK;YAAE,IAAI,CAAC,IAAI,CAAC,GAAG,MAAA,KAAK,CAAC,IAAI,CAAC,mCAAI,IAAI,CAAC;IAC5D,CAAC;CACD;AAZD,6BAYC"}
+{"version":3,"file":"subcommand.js","sourceRoot":"","sources":["../../src/classes/subcommand.ts"],"names":[],"mappings":";;AAEA,MAAqB,UAAU;IAS9B,YAAY,KAAsB;;QACjC,KAAK,MAAM,IAAI,IAAI,KAAK;YAAE,IAAI,CAAC,IAAI,CAAC,GAAG,MAAA,KAAK,CAAC,IAAI,CAAC,mCAAI,IAAI,CAAC;IAC5D,CAAC;CACD;AAZD,6BAYC"}
