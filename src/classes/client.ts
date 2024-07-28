@@ -6,7 +6,7 @@ import path from "path";
 import Event from "./event";
 import Subcommand from "./subcommand";
 
-export default class Client extends DiscordClient implements ClientProps {
+export default class Client<Ready extends boolean = boolean> extends DiscordClient<Ready> implements ClientProps {
 	public commands: Collection<string, Command> = new Collection();
 	public subcommands: Collection<string, Subcommand> = new Collection();
 	constructor(options: ClientOptions) {
