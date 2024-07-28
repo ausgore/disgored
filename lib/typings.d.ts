@@ -12,23 +12,26 @@ export interface InitOptionsProps {
         events?: string;
     };
 }
+export interface ExtendedClient {
+    client: Client<true>;
+}
 export interface CommandProps {
     data: any;
-    run: (interaction: ChatInputCommandInteraction) => void;
-    autocomplete?: (interaction: AutocompleteInteraction) => void;
-    button?: (interaction: ButtonInteraction) => void;
-    modal?: (interaction: ModalSubmitInteraction) => void;
-    select?: (interaction: AnySelectMenuInteraction) => void;
+    run: (interaction: ChatInputCommandInteraction & ExtendedClient) => void;
+    autocomplete?: (interaction: AutocompleteInteraction & ExtendedClient) => void;
+    button?: (interaction: ButtonInteraction & ExtendedClient) => void;
+    modal?: (interaction: ModalSubmitInteraction & ExtendedClient) => void;
+    select?: (interaction: AnySelectMenuInteraction & ExtendedClient) => void;
 }
 export interface SubcommandProps {
     command: string;
     subcommand: string;
     group?: string;
-    run: (interaction: ChatInputCommandInteraction) => void;
-    autocomplete?: (interaction: AutocompleteInteraction) => void;
-    button?: (interaction: ButtonInteraction) => void;
-    modal?: (interaction: ModalSubmitInteraction) => void;
-    select?: (interaction: AnySelectMenuInteraction) => void;
+    run: (interaction: ChatInputCommandInteraction & ExtendedClient) => void;
+    autocomplete?: (interaction: AutocompleteInteraction & ExtendedClient) => void;
+    button?: (interaction: ButtonInteraction & ExtendedClient) => void;
+    modal?: (interaction: ModalSubmitInteraction & ExtendedClient) => void;
+    select?: (interaction: AnySelectMenuInteraction & ExtendedClient) => void;
 }
 export interface EventProps<T extends string | keyof ClientEvents> {
     event: T;
