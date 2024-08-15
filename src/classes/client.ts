@@ -61,7 +61,8 @@ export default class Client<Ready extends boolean = boolean> extends DiscordClie
 	}
 
 	public getSubcommand(command: string, subcommand: string, subcommandGroup?: string | null) {
-		return this.subcommands.get(`${command}${subcommandGroup ? `-${subcommandGroup}` : ""}-${subcommand}`);
+		if (!subcommandGroup) return this.subcommands.get(`${command}-${subcommand}`);
+		else return this.subcommands.get(`${command}-${subcommand}`) ?? this.subcommands.get(`${command}-${subcommandGroup}-${subcommand}`);
 	}
 
 	public async loadSlashCommands() {
