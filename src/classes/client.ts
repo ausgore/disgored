@@ -7,23 +7,44 @@ import Event from "./event";
 import Subcommand from "./subcommand";
 
 export default class Client<Ready extends boolean = boolean> extends DiscordClient<Ready> implements ClientProps {
+	public rest: REST;
 	public commands: Collection<string, Command> = new Collection();
 	public subcommands: Collection<string, Subcommand> = new Collection();
 	constructor(options: ClientOptions) {
 		super(options);
 	}
 
-	public async init(token: string, options?: InitOptionsProps) {
+	public async init(token: string, options: InitOptionsProps) {
+		this.rest = new REST({ version: options.version });
+		this.rest.setToken(token);
+
 		await this.register(options?.directories?.commands ?? "./commands");
 		await this.register(options?.directories?.events ?? "./events");
+
 		this.once("ready", async (client) => {
 			if (this.commands.size) await this.loadSlashCommands();
 			console.log(`Successfully logged in as \u001b[32m${client.user.tag}\u001b[0m!`);
 			await this.application.commands.fetch();
 		});
+
 		this.login(token);
 	}
 
+	/** Get a command or subcommand */
+	public getCommand(command: string, subcommand: string, group?: string | null) {
+		if (!group) return this.subcommands.get(`${command}-${subcommand}`);
+		else return this.subcommands.get(`${command}-${subcommand}`) ?? this.subcommands.get(`${command}-${group}-${subcommand}`);
+	}
+
+	/** Loads the slash commands after registering the commands */
+	private async loadSlashCommands() {
+		console.log(" - Clearing existing \u001b[34;1mapplication (/) commands\u001b[0m");
+		const commands = this.commands.map(c => c.data);
+		await this.rest.put(Routes.applicationCommands(this.user.id), { body: commands });
+		console.log(" - Successfully reloaded \u001b[34;1mapplication (/) commands\u001b[0m");
+	}
+
+	/** Register handler */
 	private async register(dir: string) {
 		dir = path.resolve(process.cwd(), dir);
 		const files = await fs.readdir(dir).catch(() => null);
@@ -58,18 +79,5 @@ export default class Client<Ready extends boolean = boolean> extends DiscordClie
 		};
 
 		await Promise.all(files.map(file => processFile(file)));
-	}
-
-	public getSubcommand(command: string, subcommand: string, subcommandGroup?: string | null) {
-		if (!subcommandGroup) return this.subcommands.get(`${command}-${subcommand}`);
-		else return this.subcommands.get(`${command}-${subcommand}`) ?? this.subcommands.get(`${command}-${subcommandGroup}-${subcommand}`);
-	}
-
-	public async loadSlashCommands() {
-		console.log(" - Clearing existing \u001b[34;1mapplication (/) commands\u001b[0m");
-		const rest = new REST().setToken(this.token);
-		const commands = this.commands.map(c => c.data);
-		await rest.put(Routes.applicationCommands(this.user.id), { body: commands });
-		console.log(" - Successfully reloaded \u001b[34;1mapplication (/) commands\u001b[0m");
 	}
 }

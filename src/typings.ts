@@ -1,14 +1,16 @@
-import { AnySelectMenuInteraction, AutocompleteInteraction, ButtonInteraction, ChatInputCommandInteraction, ClientEvents, Collection, ModalSubmitInteraction } from "discord.js";
+import { AnySelectMenuInteraction, AutocompleteInteraction, ButtonInteraction, ChatInputCommandInteraction, ClientEvents, Collection, ModalSubmitInteraction, REST } from "discord.js";
 import Client from "./classes/client";
 import Command from "./classes/command";
 import Subcommand from "./classes/subcommand";
 
 export interface ClientProps {
+	rest: REST;
 	commands: Collection<string, Command>;
 	subcommands: Collection<string, Subcommand>;
 }
 
 export interface InitOptionsProps {
+	version: string;
 	directories?: {
 		commands?: string;
 		events?: string;
