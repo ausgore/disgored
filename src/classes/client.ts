@@ -32,7 +32,7 @@ export default class Client<Ready extends boolean = boolean> extends DiscordClie
 	/** Get a command or subcommand */
 	public getCommand(command: string, subcommand: string, group?: string | null) {
 		if (!group) return this.subcommands.get(`${command}-${subcommand}`);
-		else return this.subcommands.get(`${command}-${subcommand}`) ?? this.subcommands.get(`${command}-${group}-${subcommand}`);
+		else return this.subcommands.get(`${command}-${group}-${subcommand}`) ?? this.subcommands.get(`${command}-${subcommand}`);
 	}
 
 	/** Loads the slash commands after registering the commands */
