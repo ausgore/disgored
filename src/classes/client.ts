@@ -17,12 +17,13 @@ export default class Client<Ready extends boolean = boolean> extends DiscordClie
 		this.rest = new REST({ version: options.version });
 		this.rest.setToken(token);
 
-		await this.register(options?.directories?.commands ?? "./commands");
-		await this.register(options?.directories?.events ?? "./events");
-
 		this.once("ready", async (client) => {
-			if (this.commands.size && options.restart) await this.loadSlashCommands();
 			console.log(`Successfully logged in as \u001b[32m${client.user.tag}\u001b[0m!`);
+
+			await this.register(options?.directories?.commands ?? "./commands");
+			await this.register(options?.directories?.events ?? "./events");
+
+			if (this.commands.size && options.restart) await this.loadSlashCommands();
 			await this.application.commands.fetch();
 		});
 
