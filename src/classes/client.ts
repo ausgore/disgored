@@ -21,7 +21,7 @@ export default class Client<Ready extends boolean = boolean> extends DiscordClie
 		await this.register(options?.directories?.events ?? "./events");
 
 		this.once("ready", async (client) => {
-			if (this.commands.size) await this.loadSlashCommands();
+			if (this.commands.size && options.restart) await this.loadSlashCommands();
 			console.log(`Successfully logged in as \u001b[32m${client.user.tag}\u001b[0m!`);
 			await this.application.commands.fetch();
 		});

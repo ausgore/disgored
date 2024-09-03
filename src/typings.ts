@@ -11,6 +11,7 @@ export interface ClientProps {
 
 export interface InitOptionsProps {
 	version: string;
+	restart?: boolean;
 	directories?: {
 		commands?: string;
 		events?: string;
